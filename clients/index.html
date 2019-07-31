@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="marketplace_app">
+	<head>
+		<title>Marketplace</title>
+		<meta charset="UTF-8">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+		<link rel="stylesheet" type="text/css" href="./static/css/styles.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.9/angular-route.min.js"></script>
+		<script src="./static/angular.js"></script>
+	</head>
+	<body>
+		<div class="content" ng-controller="phones_controller">
+			<div class="information-phone-modal lightbox" ng-show="modal_info_phone">
+				<div class="close-btn" ng-click="hideModalInfoPhone()">&times;</div>
+				<table class="form width-1000 center-block">
+					<tr>
+						<td class="input-cell">
+							<span class='input-label'>Model:</span>
+							<span ng-bind="info_phone_show.model"></span>
+						</td>
+					</tr>
+					<tr>
+						<td class="input-cell">
+							<span class='input-label'>Rating:</span>
+							<span ng-bind="info_phone_show.rating"></span>
+						</td>
+					</tr>
+					<tr>
+						<td class="input-cell">
+							<span class='input-label'>Price:</span>
+							<span ng-bind="info_phone_show.price"></span>
+						</td>
+					</tr>
+					<tr>
+						<td class="input-cell">
+							<span class='input-label'>Features:</span>
+							<span ng-bind="info_phone_show.features"></span>
+						</td>
+					</tr>
+				</table>
+			</div>
+			<div class="add-phone-modal lightbox" ng-show="modal_add_phone">
+				<div class="close-btn" ng-click="hideModalAddPhone()">&times;</div>
+				<table class="form width-1000 center-block">
+					<tr>
+						<td class="input-cell">
+							<span class='input-label'>Model:</span>
+							<input type="text" class="input-add" ng-model="new_phone.model"/>
+						</td>
+					</tr>
+					<tr>
+						<td class="input-cell">
+							<span class='input-label custom-input-snippet'>Price:</span>
+							<input type="text" class="input-add" ng-model="new_phone.price"/>
+						</td>
+					</tr>
+					<tr>
+						<td class="input-cell">
+							<span class='input-label'>Features:</span>
+							<input type="text" class="input-add" style="max-height: 150px" ng-model="new_phone.features"/>
+						</td>
+					</tr>
+				</table>
+				<div class="buttons right-align">
+					<button type="button" ng-click="hideModalAddPhone()" class="light-btn">Cancel</button>
+					<button type="button" ng-click="addPhone()" class="light-btn">Save</button>
+				</div>
+			</div>
+			<div class="title-box">
+				<span class="title">Marketplace</span>
+
+				<div class="title-buttons">
+					<a class="btn light-btn" ng-click="showModalAddPhone()">Add gadget</a>
+					<select class="btn light-btn"
+							ng-model="filter">
+						<option value="">Choose how to sort</option>
+						<option ng-repeat="filter in all_filters">{{filter}}</option>
+					</select>
+				</div>
+			</div>
+			<table class="records">
+				<tr>
+					<th>Model</th>
+					<th>Price</th>
+					<th>Rating</th>
+				</tr>
+				<tr class="record" ng-repeat="phone in phones | orderBy: filter">
+					<td class="name"><a ng-click="showModalInfoPhone(phone)">{{phone.model}}</a></td>
+					<td class="name"><a>{{phone.price}}</a></td>
+					<td class="name"><a>{{phone.rating}}</a></td>
+					<td class="rating"><a ng-click="ratingUp(phone)">&uarr;</a></td>
+					<td class="remove"><a ng-click="remove(phone)">&times</a></td>
+				</tr>
+			</table>
+			<div class="page-links">
+				<div class="total-count">({{total_items}} total gadgets)</div>
+			</div>
+		</div>
+	</body>
+</html>
